@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "operator/**"
+      - ".github/workflows/build-operator.yml"
 
 jobs:
   build:
@@ -26,3 +27,4 @@ jobs:
           cd ./operator
           docker compose build operator
           docker compose run operator
+          docker compose push operator
