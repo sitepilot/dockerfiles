@@ -1,5 +1,13 @@
 #!/bin/bash
 
+function shutdown()
+{
+    /usr/local/lsws/bin/lswsctrl stop
+	exit 0
+}
+
+trap shutdown SIGTERM
+
 while true; do
 	if ! /usr/local/lsws/bin/lswsctrl status | grep 'litespeed is running with PID *' > /dev/null; then
 		break
