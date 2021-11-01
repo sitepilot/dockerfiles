@@ -24,7 +24,7 @@ jobs:
 
       - name: Install composer packages
         run: |
-          cd ./runtime
+          cd ./runtime/runtime
           composer install --no-dev
 
       - name: Build and push runtime 7.4
