@@ -16,6 +16,7 @@ ENV RUNTIME_USER_NAME runtime
 LABEL io.stack.enable true
 LABEL io.stack.type runtime
 LABEL io.stack.shell.id ${RUNTIME_USER_ID}
+LABEL org.opencontainers.image.source https://github.com/sitepilot/dockerfiles
 
 # Install packages
 COPY install-packages /usr/local/bin
