@@ -1,0 +1,26 @@
+---
+templates:
+  - name: lshttpd
+    destination: /usr/local/lsws/conf/httpd_config.conf
+  - name: vhost
+    destination: /usr/local/lsws/conf/templates/vhost.conf
+
+variables:
+  server_name: "container"
+  admin_email: "hello@container.local"
+  php_workers: 5
+  php_timezone: "Europe/Amsterdam"
+  php_upload_size: "32M"
+  php_memory_limit: "256M"
+  php_max_input_vars: 3000
+  php_opcache_memory: 128
+
+rules:
+  server_name: ["required", "string"]
+  admin_email: ["required", "email"]
+  php_workers: ["required", "numeric"]
+  php_timezone: ["required", "timezone"]
+  php_upload_size: ["required", "ends_with:M,G"]
+  php_memory_limit: ["required", "ends_with:M,G"]
+  php_max_input_vars: ["required", "numeric"]
+  php_opcache_memory: ["required", "numeric"]

@@ -1,6 +1,7 @@
-# {{ generated_by }}
-user                      {{ runtime.username }}
-group                     {{ runtime.username }}
+# {{ $generated_by }}
+user                      {{ env('RUNTIME_USER_NAME') }}
+group                     {{ env('RUNTIME_USER_NAME') }}
+serverName                {{ $server_name }}
 priority                  0
 inMemBufSize              60M
 swappingDir               /tmp/lshttpd/swap
@@ -9,10 +10,10 @@ gracefulRestartTimeout    300
 mime                      conf/mime.properties
 showVersionNumber         0
 useIpInProxyHeader        3
-adminEmails               {{ admin_email }}
+adminEmails               {{ $admin_email }}
 
 errorlog logs/error.log {
-  logLevel                DEBUG
+  logLevel                WARN
   debugLevel              0
   rollingSize             10M
   keepDays                30
@@ -113,14 +114,14 @@ accessControl  {
 extprocessor php {
   type                    lsapi
   address                 UDS://tmp/lshttpd/php.sock
-  maxConns                2000
+  maxConns                {{ $php_workers }}
   initTimeout             60
   retryTimeout            0
   respBuffer              0
   autoStart               2
   path                    /usr/local/lsws/lsphp80/bin/lsphp
   env                     LSAPI_MAX_IDLE=60
-  env                     LSAPI_CHILDREN=5
+  env                     LSAPI_CHILDREN={{ $php_workers }}
 }
 
 scripthandler  {
@@ -151,7 +152,7 @@ listener http {
 }
 
 vhTemplate runtime {
-  templateFile            $SERVER_ROOT/conf/templates/runtime.conf
+  templateFile            $SERVER_ROOT/conf/templates/vhost.conf
   listeners               http
 
   member default {

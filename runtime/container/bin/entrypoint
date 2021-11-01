@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -e
+
+if id "runtime" &>/dev/null; then
+    if [ $RUNTIME_USER_NAME != 'runtime' ]; then
+        container log "Rename runtime user to $RUNTIME_USER_NAME"
+        usermod -l $RUNTIME_USER_NAME runtime
+        groupmod -n $RUNTIME_USER_NAME runtime
+    fi
+fi
+
+if [ -n "$RUNTIME_USER_PASSWORD" ]; then
+    container log "Update user password"
+    echo "$RUNTIME_USER_NAME:$RUNTIME_USER_PASSWORD" | chpasswd -e
+fi
+
+container log "Setup bash profile"
+cp /root/.bashrc /home/runtime/.bashrc
+cp /root/.profile /home/runtime/.profile
+
+dirs=(
+    "/home/runtime"
+    "/home/runtime/logs"
+    "/home/runtime/public"
+)
+
+for i in "${dirs[@]}"
+do
+    container log "Create directory $i"
+	mkdir -p $i
+    chown $RUNTIME_USER_NAME:$RUNTIME_USER_NAME $i
+done
+
+container init
+
+/usr/local/lsws/bin/lswsctrl start
+
+exec "$@"

@@ -1,8 +1,0 @@
-#!/usr/bin/env php
-<?php
-
-use Sitepilot\Runtime\Runtime;
-
-require __DIR__ . '/vendor/autoload.php';
-
-(new Runtime)->init();

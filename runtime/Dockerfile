@@ -8,7 +8,6 @@ ARG PHP_DOT_VERSION=8.0
 ENV PHP_VERSION $PHP_VERSION
 ENV PHP_DOT_VERSION $PHP_DOT_VERSION
 
-ENV STACK_PATH /opt/runtime/config
 ENV RUNTIME_USER_ID 1001
 ENV RUNTIME_USER_NAME runtime
 
@@ -77,31 +76,36 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
     && install-packages nodejs
 
+# Install Container CLI
+RUN curl -OL https://github.com/sitepilot/container-cli/releases/download/v1.0.2/container \
+    && chmod +x container \
+    && mv container /usr/local/bin/container \
+    && container --version
+
 # Create runtime user
 RUN usermod -l runtime -u ${RUNTIME_USER_ID} -d /home/runtime www-data \
     && groupmod -n runtime -g ${RUNTIME_USER_ID} www-data \
     && chsh -s /bin/bash runtime
 
 # Copy runtime files
-COPY runtime /opt/runtime
+COPY container /opt/container
 
-RUN ln -sf /opt/runtime/config/sshd_config /etc/ssh/sshd_config
+RUN ln -sf /opt/container/config/sshd_config /etc/ssh/sshd_config
 
 # Filesystem
-RUN mkdir -p /home/runtime /tmp/lshttpd /run/sshd
+RUN mkdir -p /tmp/lshttpd /run/sshd
 
 RUN chown -R ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
-    /home/runtime \
-    /usr/local/lsws \
-    /tmp/lshttpd
+    /tmp/lshttpd \
+    /usr/local/lsws
 
 RUN chown -R lsadm:lsadm /usr/local/lsws/admin
 
 # Container config
 EXPOSE 80
 
-WORKDIR /home/runtime/public
+WORKDIR /home/runtime
 
-ENTRYPOINT ["/opt/runtime/bin/entrypoint"]
+ENTRYPOINT ["/opt/container/bin/entrypoint"]
 
-CMD ["/usr/bin/supervisord", "-c", "/opt/runtime/config/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/opt/container/config/supervisord.conf"]

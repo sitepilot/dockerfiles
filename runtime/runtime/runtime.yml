@@ -1,7 +1,0 @@
----
-server_name: "Stack"
-admin_email: "hello@stack.local"
-php_timezone: "Europe/Amsterdam"
-php_upload_size: "32M"
-php_memory_limit: "256M"
-php_max_input_vars: 3000

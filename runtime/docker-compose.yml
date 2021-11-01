@@ -7,9 +7,15 @@ services:
       args:
         PHP_VERSION: 74
         PHP_DOT_VERSION: 7.4
+    ports:
+      - 22
+      - 80
+      - 7080
     environment:
       RUNTIME_USER_NAME: test-user
-      RUNTIME_USER_PASSWORD: "indainda"
+      RUNTIME_USER_PASSWORD: "$$2y$$10$$MJwRvRbh70kJNrRWp2FzLeF4CJNG4a1tqyggtSeDvcmd4nfNXV5K." # secret
+    volumes:
+      - ./public:/home/runtime/public
 
   runtime-80:
     image: ghcr.io/sitepilot/runtime:8.0
@@ -18,6 +24,12 @@ services:
       args:
         PHP_VERSION: 80
         PHP_DOT_VERSION: 8.0
+    ports:
+      - 22
+      - 80
+      - 7080
     environment:
-      RUNTIME_USER_NAME: test-user
-      RUNTIME_USER_PASSWORD: "indainda"
+      RUNTIME_USER_NAME: test-site
+      RUNTIME_USER_PASSWORD: "$$2y$$10$$MJwRvRbh70kJNrRWp2FzLeF4CJNG4a1tqyggtSeDvcmd4nfNXV5K." # secret
+    volumes:
+      - ./public:/home/runtime/public
