@@ -1,0 +1,39 @@
+---
+name: build-runtime
+
+on:
+  push:
+    paths:
+      - "runtime/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install composer packages
+        run: |
+          cd ./runtime
+          composer install --no-dev
+
+      - name: Build and push runtime 7.4
+        run: |
+          cd ./runtime
+          docker compose build runtime-74
+          docker compose run runtime-74
+
+      - name: Build and push runtime 8.0
+        run: |
+          cd ./runtime
+          docker compose build runtime-80
+          docker compose run runtime-80
