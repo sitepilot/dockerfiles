@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "runtime/**"
+      - ".github/workflows/build-runtime.yml"
 
 jobs:
   build:
