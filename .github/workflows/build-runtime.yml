@@ -22,11 +22,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install composer packages
-        run: |
-          cd ./runtime/runtime
-          composer install --no-dev
-
       - name: Build and push runtime 7.4
         run: |
           cd ./runtime
