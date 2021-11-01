@@ -31,10 +31,12 @@ jobs:
         run: |
           cd ./runtime
           docker compose build runtime-74
-          docker compose run runtime-74
+          docker compose run runtime-74 php --version
+          docker compose push runtime-74
 
       - name: Build and push runtime 8.0
         run: |
           cd ./runtime
           docker compose build runtime-80
-          docker compose run runtime-80
+          docker compose run runtime-80 php --version
+          docker compose push runtime-80
