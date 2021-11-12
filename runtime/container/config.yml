@@ -6,6 +6,7 @@ templates:
     destination: /usr/local/lsws/conf/templates/vhost.conf
 
 variables:
+  doc_root: ""
   server_name: "container"
   admin_email: "hello@container.local"
   php_workers: 5
@@ -16,6 +17,7 @@ variables:
   php_opcache_memory: 128
 
 rules:
+  doc_root: ["nullable", "string"]
   server_name: ["required", "string"]
   admin_email: ["required", "email"]
   php_workers: ["required", "numeric"]

@@ -6,7 +6,7 @@ enableScript              1
 restrained                1
 
 virtualHostConfig  {
-  docRoot                 $VH_ROOT/public
+  docRoot                 $VH_ROOT/public/{{ $doc_root }}
 
   errorlog $VH_ROOT/logs/error.log {
     useServer             0
