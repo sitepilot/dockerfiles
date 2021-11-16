@@ -21,6 +21,7 @@ RUN install-packages \
     curl \
     nano \
     msmtp \
+    restic \
     supervisor \
     openssh-server \
     ca-certificates
