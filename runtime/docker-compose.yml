@@ -12,6 +12,7 @@ services:
       - 80
       - 7080
     environment:
+      RUNTIME_USER_ID: 1002
       RUNTIME_USER_NAME: test-user
       RUNTIME_USER_PASSWORD: "$$2y$$10$$MJwRvRbh70kJNrRWp2FzLeF4CJNG4a1tqyggtSeDvcmd4nfNXV5K." # secret
     volumes:
@@ -29,6 +30,7 @@ services:
       - 80
       - 7080
     environment:
+      RUNTIME_USER_ID: 1002
       RUNTIME_USER_NAME: test-site
       RUNTIME_USER_PASSWORD: "$$2y$$10$$MJwRvRbh70kJNrRWp2FzLeF4CJNG4a1tqyggtSeDvcmd4nfNXV5K." # secret
     volumes:

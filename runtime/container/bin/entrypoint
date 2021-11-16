@@ -3,6 +3,13 @@
 set -e
 
 if id "runtime" &>/dev/null; then
+    if [ $RUNTIME_USER_ID != 1001 ]; then 
+        container log "Update runtime uid to $RUNTIME_USER_ID"
+        usermod -u $RUNTIME_USER_ID runtime
+        chown -R $RUNTIME_USER_ID:$RUNTIME_USER_ID /tmp/lshttpd
+        chown -R $RUNTIME_USER_ID:$RUNTIME_USER_ID /usr/local/lsws
+    fi
+
     if [ $RUNTIME_USER_NAME != 'runtime' ]; then
         container log "Rename runtime user to $RUNTIME_USER_NAME"
         usermod -l $RUNTIME_USER_NAME runtime
@@ -16,13 +23,13 @@ if [ -n "$RUNTIME_USER_PASSWORD" ]; then
 fi
 
 container log "Setup bash profile"
-cp /root/.bashrc /home/runtime/.bashrc
-cp /root/.profile /home/runtime/.profile
+cp /root/.bashrc ${RUNTIME_USER_HOME}/.bashrc
+cp /root/.profile ${RUNTIME_USER_HOME}/.profile
 
 dirs=(
-    "/home/runtime"
-    "/home/runtime/logs"
-    "/home/runtime/public"
+    "${RUNTIME_USER_HOME}"
+    "${RUNTIME_USER_HOME}/logs"
+    "${RUNTIME_USER_HOME}/public"
 )
 
 for i in "${dirs[@]}"
@@ -33,7 +40,5 @@ do
 done
 
 container init
-
-/usr/local/lsws/bin/lswsctrl start
 
 exec "$@"

@@ -10,27 +10,20 @@ ENV PHP_DOT_VERSION $PHP_DOT_VERSION
 
 ENV RUNTIME_USER_ID 1001
 ENV RUNTIME_USER_NAME runtime
-
-# Labels
-LABEL io.stack.enable true
-LABEL io.stack.type runtime
-LABEL io.stack.shell.id ${RUNTIME_USER_ID}
-LABEL org.opencontainers.image.source https://github.com/sitepilot/dockerfiles
+ENV RUNTIME_USER_HOME /home/runtime
 
 # Install packages
 COPY install-packages /usr/local/bin
 
 RUN install-packages \
+    git \
     wget \
     curl \
-    gnupg \
-    msmtp \
-    ca-certificates \
     nano \
-    less \
+    msmtp \
     supervisor \
-    git \
-    mysql-client
+    openssh-server \
+    ca-certificates
 
 # Install Openlitespeed & LSPHP
 RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | bash \
@@ -54,8 +47,7 @@ RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | b
     lsphp$PHP_VERSION-redis \
     lsphp$PHP_VERSION-sqlite3 \
     lsphp$PHP_VERSION-tidy \
-    openlitespeed \
-    openssh-server
+    openlitespeed
 
 RUN ln -s /usr/local/lsws/lsphp$PHP_VERSION/bin/php /usr/local/bin/php
 
@@ -83,14 +75,12 @@ RUN curl -OL https://github.com/sitepilot/container-cli/releases/download/v1.0.2
     && container --version
 
 # Create runtime user
-RUN usermod -l runtime -u ${RUNTIME_USER_ID} -d /home/runtime www-data \
+RUN usermod -l runtime -u ${RUNTIME_USER_ID} -d ${RUNTIME_USER_HOME} www-data \
     && groupmod -n runtime -g ${RUNTIME_USER_ID} www-data \
     && chsh -s /bin/bash runtime
 
 # Copy runtime files
 COPY container /opt/container
-
-RUN ln -sf /opt/container/config/sshd_config /etc/ssh/sshd_config
 
 # Filesystem
 RUN mkdir -p /tmp/lshttpd /run/sshd
@@ -104,7 +94,7 @@ RUN chown -R lsadm:lsadm /usr/local/lsws/admin
 # Container config
 EXPOSE 80
 
-WORKDIR /home/runtime
+WORKDIR ${RUNTIME_USER_HOME}/public
 
 ENTRYPOINT ["/opt/container/bin/entrypoint"]
 

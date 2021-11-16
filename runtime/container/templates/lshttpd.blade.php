@@ -119,7 +119,7 @@ extprocessor php {
   retryTimeout            0
   respBuffer              0
   autoStart               2
-  path                    /usr/local/lsws/lsphp80/bin/lsphp
+  path                    /usr/local/lsws/lsphp{{ env('PHP_VERSION') }}/bin/lsphp
   env                     LSAPI_MAX_IDLE=60
   env                     LSAPI_CHILDREN={{ $php_workers }}
 }
@@ -157,6 +157,6 @@ vhTemplate runtime {
 
   member default {
     vhDomain              *
-    vhRoot                /home/runtime
+    vhRoot                {{ env('RUNTIME_USER_HOME') }}
   }
 }

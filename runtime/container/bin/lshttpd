@@ -8,6 +8,8 @@ function shutdown()
 
 trap shutdown SIGTERM
 
+/usr/local/lsws/bin/lswsctrl start
+
 while true; do
 	if ! /usr/local/lsws/bin/lswsctrl status | grep 'litespeed is running with PID *' > /dev/null; then
 		break
