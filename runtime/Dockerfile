@@ -23,6 +23,7 @@ RUN install-packages \
     msmtp \
     restic \
     supervisor \
+    mariadb-client \
     openssh-server \
     ca-certificates
 
