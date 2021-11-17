@@ -52,6 +52,7 @@ RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | b
     openlitespeed
 
 RUN ln -s /usr/local/lsws/lsphp$PHP_VERSION/bin/php /usr/local/bin/php
+RUN ln -s /opt/container/config/php.ini /usr/local/lsws/lsphp$PHP_VERSION/etc/php/$PHP_DOT_VERSION/mods-available/99-container.ini
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \

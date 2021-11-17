@@ -6,6 +6,8 @@ templates:
     destination: /usr/local/lsws/conf/httpd_config.conf
   - name: vhost
     destination: /usr/local/lsws/conf/templates/vhost.conf
+  - name: php
+    destination: /opt/container/config/php.ini
   - name: sshd
     destination: /etc/ssh/sshd_config
 
@@ -19,6 +21,7 @@ variables:
   php_memory_limit: "256M"
   php_max_input_vars: 3000
   php_opcache_memory: 128
+  php_disable_functions: "pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,pcntl_unshare"
 
 rules:
   doc_root: ["nullable", "string"]
@@ -30,3 +33,4 @@ rules:
   php_memory_limit: ["required", "ends_with:M,G"]
   php_max_input_vars: ["required", "numeric"]
   php_opcache_memory: ["required", "numeric"]
+  php_disable_functions: ["nullable", "string"]
