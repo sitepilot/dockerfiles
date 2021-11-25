@@ -8,6 +8,7 @@ if id "runtime" &>/dev/null; then
         usermod -u $RUNTIME_USER_ID runtime
         chown -R $RUNTIME_USER_ID:$RUNTIME_USER_ID /tmp/lshttpd
         chown -R $RUNTIME_USER_ID:$RUNTIME_USER_ID /usr/local/lsws
+        chown -R lsadm:lsadm /usr/local/lsws/admin
     fi
 
     if [ $RUNTIME_USER_NAME != 'runtime' ]; then

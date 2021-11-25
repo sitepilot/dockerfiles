@@ -10,6 +10,7 @@ services:
     ports:
       - 22
       - 80
+      - 443
       - 7080
     environment:
       RUNTIME_USER_ID: 1002
@@ -28,6 +29,7 @@ services:
     ports:
       - 22
       - 80
+      - 443
       - 7080
     environment:
       RUNTIME_USER_ID: 1002

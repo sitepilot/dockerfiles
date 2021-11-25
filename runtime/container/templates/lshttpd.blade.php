@@ -151,9 +151,16 @@ listener http {
   secure                  0
 }
 
+listener https {
+  address                 *:443
+  secure                  1
+  keyFile                 {{ $ssl_key_file }}
+  certFile                {{ $ssl_cert_file }}
+}
+
 vhTemplate runtime {
   templateFile            $SERVER_ROOT/conf/templates/vhost.conf
-  listeners               http
+  listeners               http, https
 
   member default {
     vhDomain              *
