@@ -54,6 +54,9 @@ RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | b
 RUN ln -s /usr/local/lsws/lsphp$PHP_VERSION/bin/php /usr/local/bin/php
 RUN ln -s /opt/container/config/php.ini /usr/local/lsws/lsphp$PHP_VERSION/etc/php/$PHP_DOT_VERSION/mods-available/99-container.ini
 
+RUN echo 'admin:$1$yG/Ab1fN$bFgPyLO3kzzDLUxzu5E78.' > '/usr/local/lsws/admin/conf/htpasswd' \
+    && echo 'WebAdmin user/password is admin/supersecret' > '/usr/local/lsws/adminpasswd'
+
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
