@@ -9,7 +9,7 @@ autoFix503                1
 gracefulRestartTimeout    300
 mime                      conf/mime.properties
 showVersionNumber         0
-useIpInProxyHeader        3
+useIpInProxyHeader        1
 adminEmails               {{ $admin_email }}
 
 errorlog logs/error.log {
