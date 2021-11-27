@@ -21,6 +21,7 @@ RUN install-packages \
     curl \
     nano \
     msmtp \
+    rsync \
     restic \
     supervisor \
     mariadb-client \
