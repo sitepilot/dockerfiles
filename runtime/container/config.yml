@@ -36,3 +36,5 @@ rules:
   php_max_input_vars: ["required", "numeric"]
   php_opcache_memory: ["required", "numeric"]
   php_disable_functions: ["nullable", "string"]
+  ssl_key_file: ["required", "string"]
+  ssl_cert_file: ["required", "string"]
