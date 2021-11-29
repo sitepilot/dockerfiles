@@ -31,4 +31,4 @@ command=bash -c "printf 'READY\n' && while read line; do kill -SIGQUIT $PPID; do
 events=PROCESS_STATE_STOPPED,PROCESS_STATE_EXITED,PROCESS_STATE_FATAL
 
 [include]
-files = /opt/container/config/supervisor.d/*.conf
+files = /opt/container/custom/supervisor.d/*.conf

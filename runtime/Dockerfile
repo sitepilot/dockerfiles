@@ -28,6 +28,8 @@ RUN install-packages \
     openssh-server \
     ca-certificates
 
+RUN ln -s /opt/container/custom/msmtp.conf /etc/msmtprc
+
 # Install Openlitespeed & LSPHP
 RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | bash \
     && install-packages \
@@ -53,7 +55,8 @@ RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | b
     openlitespeed
 
 RUN ln -s /usr/local/lsws/lsphp$PHP_VERSION/bin/php /usr/local/bin/php
-RUN ln -s /opt/container/config/php.ini /usr/local/lsws/lsphp$PHP_VERSION/etc/php/$PHP_DOT_VERSION/mods-available/99-container.ini
+RUN ln -s /opt/container/config/php.ini /usr/local/lsws/lsphp$PHP_VERSION/etc/php/$PHP_DOT_VERSION/mods-available/95-container.ini
+RUN ln -s /opt/container/custom/php.ini /usr/local/lsws/lsphp$PHP_VERSION/etc/php/$PHP_DOT_VERSION/mods-available/99-custom.ini
 
 RUN echo 'admin:$1$yG/Ab1fN$bFgPyLO3kzzDLUxzu5E78.' > '/usr/local/lsws/admin/conf/htpasswd' \
     && echo 'WebAdmin user/password is admin/supersecret' > '/usr/local/lsws/adminpasswd'
