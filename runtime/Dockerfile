@@ -17,6 +17,7 @@ COPY install-packages /usr/local/bin
 
 RUN install-packages \
     git \
+    less \
     wget \
     curl \
     nano \
