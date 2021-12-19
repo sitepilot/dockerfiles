@@ -66,9 +66,9 @@ http {
 @endforeach
 
 	# Map forwareded scheme
-	map $http_x_forwarded_proto $forwardedscheme {
-     	default $scheme;
-     	https https;
+    map $http_x_forwarded_proto $forwardedscheme {
+        default $scheme;
+        https https;
  	}
 
     #HTTP
