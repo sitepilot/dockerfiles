@@ -16,6 +16,9 @@ templates:
 variables:
   nginx_cache: false
   nginx_doc_root: null
+  nginx_ssl_key: /opt/container/config/ssl.key
+  nginx_ssl_cert: /opt/container/config/ssl.cert
+  nginx_real_ip_from: '0.0.0.0/0' # comma separated list
   php_workers: 5
   php_timezone: "Europe/Amsterdam"
   php_upload_size: "32M"
@@ -29,9 +32,7 @@ variables:
   smtp_username: null
   smtp_password: null
   smtp_from: "website@runtime.local"
-  nginx_ssl_key: /opt/container/config/ssl.key
-  nginx_ssl_cert: /opt/container/config/ssl.cert
-
+  
 rules:
   nginx_cache: ["boolean"]
   nginx_doc_root: ["nullable", "string"]

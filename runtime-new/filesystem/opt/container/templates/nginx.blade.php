@@ -10,6 +10,8 @@ worker_rlimit_nofile 8192;
 # File that stores the process ID. Rarely needs changing.
 pid /run/nginx.pid;
 
+
+
 events {
 	# Set the maximum number of connection each worker process can open. Anything higher than this
 	# will require Unix optimisations.
@@ -55,6 +57,13 @@ http {
     # keys_zone=single-site-with-caching.com:100m creates the memory zone and sets the maximum size in MBs.
     # inactive=60m will remove cached items that haven't been accessed for 60 minutes or more.
     fastcgi_cache_path /home/runtime/cache levels=1:2 keys_zone=runtime:100m inactive=60m;
+
+	# Real IP header
+	real_ip_header X-Forwarded-For;
+
+@foreach(explode(',', $nginx_real_ip_from) as $ip)
+	set_real_ip_from {{ $ip }};
+@endforeach
 
     #HTTP
     server {
