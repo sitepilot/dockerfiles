@@ -65,11 +65,11 @@ http {
 	set_real_ip_from {{ $ip }};
 @endforeach
 
-	# Map forwareded scheme
-    map $http_x_forwarded_proto $forwardedscheme {
-        default $scheme;
-        https https;
- 	}
+    # Map https to forwarded proto
+    map $http_x_forwarded_proto $https_forwarded {
+        default off;
+        https on;
+    }
 
     #HTTP
     server {
