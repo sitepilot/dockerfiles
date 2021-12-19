@@ -1,5 +1,0 @@
----
-services:
-  operator:
-    image: ghcr.io/sitepilot/operator:latest
-    build: .
