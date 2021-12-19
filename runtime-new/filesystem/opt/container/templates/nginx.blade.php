@@ -65,6 +65,12 @@ http {
 	set_real_ip_from {{ $ip }};
 @endforeach
 
+	# Map forwareded scheme
+	map $http_x_forwarded_proto $forwardedscheme {
+     	default $scheme;
+     	https https;
+ 	}
+
     #HTTP
     server {
         # Ports to listen on, uncomment one.
