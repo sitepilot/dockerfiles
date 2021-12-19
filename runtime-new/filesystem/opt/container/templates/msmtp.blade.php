@@ -1,6 +1,6 @@
 defaults
-auth           {{ $smtp_username && $smtp_password ? 'yes' : 'no' }}
-tls            {{ $smtp_tls ? 'yes' : 'no' }}
+auth           {{ $smtp_username && $smtp_password ? 'on' : 'off' }}
+tls            {{ $smtp_tls ? 'on' : 'off' }}
 logfile        /home/runtime/logs/mail.log
 tls_trust_file /etc/ssl/certs/ca-certificates.crt
 
