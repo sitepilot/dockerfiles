@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -e
+
+if id "runtime" &>/dev/null; then
+    if [ $RUNTIME_USER_ID != 1001 ]; then 
+        container log "Update runtime user id to $RUNTIME_USER_ID"
+        usermod -u $RUNTIME_USER_ID runtime
+    fi
+
+    if [ $RUNTIME_USER_NAME != 'runtime' ]; then
+        container log "Rename runtime user to $RUNTIME_USER_NAME"
+        usermod -l $RUNTIME_USER_NAME runtime
+        groupmod -n $RUNTIME_USER_NAME runtime
+    fi
+fi
+
+if [ -n "$RUNTIME_USER_PASSWORD" ]; then
+    container log "Update runtime user password"
+    echo "$RUNTIME_USER_NAME:$RUNTIME_USER_PASSWORD" | chpasswd -e
+fi
+
+container log "Initialize filesystem"
+mkdir -p \
+  ${RUNTIME_USER_HOME}/logs \
+  ${RUNTIME_USER_HOME}/cache \
+  ${RUNTIME_USER_HOME}/public
+
+chown ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
+  ${RUNTIME_USER_HOME} \
+  ${RUNTIME_USER_HOME}/public
+
+chown -R ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
+  /opt/container/www \
+  ${RUNTIME_USER_HOME}/logs \
+  ${RUNTIME_USER_HOME}/cache
+
+container log "Setup bash profile"
+cp /root/.bashrc ${RUNTIME_USER_HOME}/.bashrc
+cp /root/.profile ${RUNTIME_USER_HOME}/.profile
+
+if [ -f "/opt/container/custom/php.ini" ]; then
+container log "Load custom PHP configuration"
+ln -sf /opt/container/custom/php.ini  /etc/php/$BUILD_PHP_VERSION/fpm/conf.d/99-custom.ini
+fi
+
+if [ -f "/opt/container/custom/msmtprc" ]; then
+container log "Load custom MSMTP configuration"
+ln -sf /opt/container/custom/msmtprc /etc/msmtprc
+fi
+
+container init
+
+exec "$@"

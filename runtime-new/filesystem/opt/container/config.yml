@@ -1,0 +1,52 @@
+---
+templates:
+  - name: supervisord
+    destination: /opt/container/config/supervisord.conf
+  - name: vhost
+    destination: /opt/container/config/vhost.conf
+  - name: nginx
+    destination: /opt/container/config/nginx.conf
+  - name: pool
+    destination: /opt/container/config/pool.conf
+  - name: php
+    destination: /opt/container/config/php.ini
+  - name: msmtp
+    destination: /opt/container/config/msmtprc
+
+variables:
+  nginx_cache: false
+  nginx_doc_root: null
+  php_workers: 5
+  php_timezone: "Europe/Amsterdam"
+  php_upload_size: "32M"
+  php_memory_limit: "256M"
+  php_max_input_vars: 3000
+  php_opcache_memory: 128
+  php_disable_functions: "pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,pcntl_unshare"
+  smtp_host: mailhog.sitepilot.svc.cluster.local
+  smtp_port: 1025
+  smtp_tls: false
+  smtp_username: null
+  smtp_password: null
+  smtp_from: "website@runtime.local"
+  nginx_ssl_key: /opt/container/config/ssl.key
+  nginx_ssl_cert: /opt/container/config/ssl.cert
+
+rules:
+  nginx_cache: ["boolean"]
+  nginx_doc_root: ["nullable", "string"]
+  nginx_ssl_key: ["required", "string"]
+  nginx_ssl_cert: ["required", "string"]
+  php_workers: ["required", "numeric"]
+  php_timezone: ["required", "timezone"]
+  php_upload_size: ["required", "ends_with:M,G"]
+  php_memory_limit: ["required", "ends_with:M,G"]
+  php_max_input_vars: ["required", "numeric"]
+  php_opcache_memory: ["required", "numeric"]
+  php_disable_functions: ["nullable", "string"]
+  smtp_host: ["required", "string"]
+  smtp_port: ["required", "numeric"]
+  smtp_tls: ["boolean"]
+  smtp_username: ["nullable", "string"]
+  smtp_password: ["nullable", "string"]
+  smtp_from: ["required", "email"]
