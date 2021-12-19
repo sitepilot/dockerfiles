@@ -44,9 +44,9 @@ container log "Load custom PHP configuration"
 ln -sf /opt/container/custom/php.ini  /etc/php/$BUILD_PHP_VERSION/fpm/conf.d/99-custom.ini
 fi
 
-if [ -f "/opt/container/custom/msmtprc" ]; then
+if [ -f "/opt/container/custom/msmtp.conf" ]; then
 container log "Load custom MSMTP configuration"
-ln -sf /opt/container/custom/msmtprc /etc/msmtprc
+ln -sf /opt/container/custom/msmtp.conf /etc/msmtprc
 fi
 
 container init

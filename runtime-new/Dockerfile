@@ -85,10 +85,10 @@ RUN usermod -l runtime -u ${RUNTIME_USER_ID} -d ${RUNTIME_USER_HOME} www-data \
 # Config
 COPY filesystem /
 
-RUN ln -sf /etc/msmtprc /opt/container/config/msmtprc \
-    && ln -sf /etc/nginx/nginx.conf /opt/container/config/nginx.conf \
-    && ln -sf /etc/php/$BUILD_PHP_VERSION/fpm/pool.d/www.conf /opt/container/config/pool.conf \
-    && ln -sf /etc/php/$BUILD_PHP_VERSION/fpm/conf.d/90-runtime.ini /opt/container/config/php.ini
+RUN ln -sf /opt/container/config/msmtp.conf /etc/msmtprc \
+    && ln -sf /opt/container/config/nginx.conf /etc/nginx/nginx.conf \
+    && ln -sf /opt/container/config/pool.conf /etc/php/$BUILD_PHP_VERSION/fpm/pool.d/www.conf  \
+    && ln -sf /opt/container/config/php.ini /etc/php/$BUILD_PHP_VERSION/fpm/conf.d/90-runtime.ini
 
 RUN mkdir -p /run/nginx /run/php /run/sshd
 
