@@ -1,6 +1,6 @@
 <?php
 
-$dir = getenv('RUNTIME_CACHE_PATH');
+$dir = getenv('SITEPILOT_CACHE_PATH');
 
 $it = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS);
 $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);

@@ -424,14 +424,11 @@ clear_env = {{ $php_fpm_clear_env ? 'yes' : 'no' }}
 ; the current environment.
 ; Default Value: clean env
 
-; Runtime specific
-env[RUNTIME_LOGS_PATH] = $RUNTIME_LOGS_PATH
-env[RUNTIME_CACHE_PATH] = $RUNTIME_CACHE_PATH
-env[RUNTIME_PUBLIC_PATH] = $RUNTIME_PUBLIC_PATH
-env[RUNTIME_CACHE_ENABLED] = $NGINX_CACHE
-
 ; Platform specific
 env[PLATFORM] = Sitepilot
+env[SITEPILOT_LOGS_PATH] = $RUNTIME_LOGS_PATH
+env[SITEPILOT_CACHE_PATH] = $RUNTIME_CACHE_PATH
+env[SITEPILOT_CACHE_ENABLED] = $NGINX_CACHE
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the
