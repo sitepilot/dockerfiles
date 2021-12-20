@@ -36,7 +36,6 @@ chown -R ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
   ${RUNTIME_CACHE_PATH} \
   ${RUNTIME_USER_HOME}/.ssh
 
-chown -R root:root /opt
 find /opt -type f -exec chmod 644 {} +
 find /opt -type d -exec chmod 755 {} +
 
