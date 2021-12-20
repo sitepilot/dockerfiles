@@ -1,6 +1,6 @@
 <?php
 
-$dir = '/home/runtime/cache';
+$dir = getenv('RUNTIME_CACHE_PATH');
 
 $it = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS);
 $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);

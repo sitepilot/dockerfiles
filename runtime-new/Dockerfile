@@ -6,10 +6,13 @@ ARG BUILD_PHP_VERSION="7.4"
 ENV RUNTIME_USER_ID=1001
 ENV RUNTIME_USER_NAME=runtime
 ENV RUNTIME_USER_HOME=/home/runtime
-ENV BUILD_PHP_VERSION=$BUILD_PHP_VERSION
+ENV RUNTIME_LOGS_PATH=${RUNTIME_USER_HOME}/logs
+ENV RUNTIME_CACHE_PATH=${RUNTIME_USER_HOME}/cache
+ENV RUNTIME_PUBLIC_PATH=${RUNTIME_USER_HOME}/public
+ENV BUILD_PHP_VERSION=${BUILD_PHP_VERSION}
 
-# Platfform
-ENV SITEPILOT_CACHE_PATH /home/runtime/cache
+# Platform
+ENV SITEPILOT_CACHE_PATH=${RUNTIME_CACHE_PATH}
 
 # Install packages
 COPY install-packages /usr/local/bin
@@ -36,22 +39,22 @@ RUN add-apt-repository ppa:ondrej/nginx -y \
 # Install PHP
 RUN add-apt-repository ppa:ondrej/php -y \
     && install-packages \
-    php$BUILD_PHP_VERSION-fpm \
-    php$BUILD_PHP_VERSION-common \
-    php$BUILD_PHP_VERSION-mysql \
-    php$BUILD_PHP_VERSION-xml \
-    php$BUILD_PHP_VERSION-xmlrpc \
-    php$BUILD_PHP_VERSION-curl \
-    php$BUILD_PHP_VERSION-gd \
-    php$BUILD_PHP_VERSION-imagick \
-    php$BUILD_PHP_VERSION-cli \
-    php$BUILD_PHP_VERSION-dev \
-    php$BUILD_PHP_VERSION-imap \
-    php$BUILD_PHP_VERSION-mbstring \
-    php$BUILD_PHP_VERSION-opcache \
-    php$BUILD_PHP_VERSION-redis \
-    php$BUILD_PHP_VERSION-soap \
-    php$BUILD_PHP_VERSION-zip \
+    php${BUILD_PHP_VERSION}-fpm \
+    php${BUILD_PHP_VERSION}-common \
+    php${BUILD_PHP_VERSION}-mysql \
+    php${BUILD_PHP_VERSION}-xml \
+    php${BUILD_PHP_VERSION}-xmlrpc \
+    php${BUILD_PHP_VERSION}-curl \
+    php${BUILD_PHP_VERSION}-gd \
+    php${BUILD_PHP_VERSION}-imagick \
+    php${BUILD_PHP_VERSION}-cli \
+    php${BUILD_PHP_VERSION}-dev \
+    php${BUILD_PHP_VERSION}-imap \
+    php${BUILD_PHP_VERSION}-mbstring \
+    php${BUILD_PHP_VERSION}-opcache \
+    php${BUILD_PHP_VERSION}-redis \
+    php${BUILD_PHP_VERSION}-soap \
+    php${BUILD_PHP_VERSION}-zip \
     && mkdir -p /run/php
 
 # Install Container CLI
@@ -87,10 +90,12 @@ COPY filesystem /
 
 RUN ln -sf /opt/container/config/msmtp.conf /etc/msmtprc \
     && ln -sf /opt/container/config/nginx.conf /etc/nginx/nginx.conf \
-    && ln -sf /opt/container/config/pool.conf /etc/php/$BUILD_PHP_VERSION/fpm/pool.d/www.conf  \
-    && ln -sf /opt/container/config/php.ini /etc/php/$BUILD_PHP_VERSION/fpm/conf.d/90-runtime.ini
+    && ln -sf /opt/container/config/pool.conf /etc/php/${BUILD_PHP_VERSION}/fpm/pool.d/www.conf  \
+    && ln -sf /opt/container/config/php.ini /etc/php/${BUILD_PHP_VERSION}/fpm/conf.d/90-runtime.ini
 
 RUN mkdir -p /run/nginx /run/php /run/sshd
+
+WORKDIR ${RUNTIME_PUBLIC_PATH}
 
 ENTRYPOINT ["/opt/container/bin/entrypoint"]
 

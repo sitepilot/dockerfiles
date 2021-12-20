@@ -1,12 +1,12 @@
 # Path to document root
-root /home/runtime/public/{{ $nginx_doc_root }};
+root {{ env('RUNTIME_PUBLIC_PATH') }}/{{ $nginx_doc_root }};
 
 # File to be used as index
 index index.php;
 
 # Overrides logs defined in nginx.conf, allows per site logs.
-access_log /home/runtime/logs/access.log;
-error_log /home/runtime/logs/error.log;
+access_log {{ env('RUNTIME_LOGS_PATH') }}/access.log;
+error_log {{ env('RUNTIME_LOGS_PATH') }}/error.log;
 
 # Default server block rules
 include /opt/container/config/nginx/server/defaults.conf;

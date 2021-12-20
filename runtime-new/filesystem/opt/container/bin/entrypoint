@@ -22,18 +22,18 @@ fi
 
 container log "Initialize filesystem"
 mkdir -p \
-  ${RUNTIME_USER_HOME}/logs \
-  ${RUNTIME_USER_HOME}/cache \
-  ${RUNTIME_USER_HOME}/public
+  ${RUNTIME_LOGS_PATH} \
+  ${RUNTIME_CACHE_PATH} \
+  ${RUNTIME_PUBLIC_PATH}
 
 chown ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
   ${RUNTIME_USER_HOME} \
-  ${RUNTIME_USER_HOME}/public
+  ${RUNTIME_PUBLIC_PATH}
 
 chown -R ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
   /opt/container/www \
-  ${RUNTIME_USER_HOME}/logs \
-  ${RUNTIME_USER_HOME}/cache
+  ${RUNTIME_LOGS_PATH} \
+  ${RUNTIME_CACHE_PATH}
 
 container log "Setup bash profile"
 cp /root/.bashrc ${RUNTIME_USER_HOME}/.bashrc

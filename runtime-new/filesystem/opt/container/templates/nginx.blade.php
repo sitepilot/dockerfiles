@@ -56,7 +56,7 @@ http {
     # Define path to cache and memory zone. The memory zone should be unique.
     # keys_zone=single-site-with-caching.com:100m creates the memory zone and sets the maximum size in MBs.
     # inactive=60m will remove cached items that haven't been accessed for 60 minutes or more.
-    fastcgi_cache_path /home/runtime/cache levels=1:2 keys_zone=runtime:100m inactive=60m;
+    fastcgi_cache_path {{ env('RUNTIME_CACHE_PATH') }} levels=1:2 keys_zone=runtime:100m inactive=60m;
 
 	# Real IP header
 	real_ip_header X-Forwarded-For;
