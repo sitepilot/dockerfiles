@@ -12,6 +12,8 @@ templates:
     destination: /opt/container/config/php.ini
   - name: msmtp
     destination: /opt/container/config/msmtp.conf
+  - name: sshd
+    destination: /opt/container/config/sshd_config
 
 variables:
   nginx_cache: false

@@ -91,7 +91,8 @@ COPY filesystem /
 RUN ln -sf /opt/container/config/msmtp.conf /etc/msmtprc \
     && ln -sf /opt/container/config/nginx.conf /etc/nginx/nginx.conf \
     && ln -sf /opt/container/config/pool.conf /etc/php/${BUILD_PHP_VERSION}/fpm/pool.d/www.conf  \
-    && ln -sf /opt/container/config/php.ini /etc/php/${BUILD_PHP_VERSION}/fpm/conf.d/90-runtime.ini
+    && ln -sf /opt/container/config/php.ini /etc/php/${BUILD_PHP_VERSION}/fpm/conf.d/90-runtime.ini \
+    && ln -sf /opt/container/config/sshd_config /etc/ssh/sshd_config
 
 RUN mkdir -p /run/nginx /run/php /run/sshd
 
