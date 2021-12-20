@@ -1,0 +1,6 @@
+variables:
+  nginx_cache: true
+  php_fpm_env:
+    - name: TEST_ENV_VARIABLE
+      value: test123
+  authorized_keys: []
