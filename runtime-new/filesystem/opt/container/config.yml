@@ -14,6 +14,8 @@ templates:
     destination: /opt/container/config/msmtp.conf
   - name: sshd
     destination: /opt/container/config/sshd_config
+  - name: authorized-keys
+    destination: /opt/container/config/authorized_keys
 
 variables:
   nginx_cache: false
@@ -25,6 +27,7 @@ variables:
   php_fpm_max_children: 5
   php_fpm_process_idle_timeout: 30s
   php_fpm_clear_env: true
+  php_fpm_env: []
   php_timezone: "Europe/Amsterdam"
   php_upload_size: "32M"
   php_memory_limit: "256M"
@@ -37,6 +40,7 @@ variables:
   smtp_username: null
   smtp_password: null
   smtp_from: "website@runtime.local"
+  authorized_keys: []
 
 rules:
   nginx_cache: ["boolean"]
@@ -46,6 +50,9 @@ rules:
   php_fpm_pm: ["required", "in:ondemand,dynamic"]
   php_fpm_max_children: ["required", "numeric"]
   php_fpm_process_idle_timeout: ["required", "ends_with:s,m"]
+  php_fpm_env: ["array"]
+  php_fpm_env.*.name: ["required", "string"]
+  php_fpm_env.*.value: ["required"]
   php_timezone: ["required", "timezone"]
   php_upload_size: ["required", "ends_with:M,G"]
   php_memory_limit: ["required", "ends_with:M,G"]
@@ -59,3 +66,4 @@ rules:
   smtp_username: ["nullable", "string"]
   smtp_password: ["nullable", "string"]
   smtp_from: ["required", "email"]
+  authorized_keys: ["array"]
