@@ -5,7 +5,7 @@ services:
     build:
       context: .
       args:
-        PHP_VERSION: "7.4"
+        BUILD_PHP_VERSION: "7.4"
     ports:
       - 22
       - 80
@@ -24,7 +24,7 @@ services:
     build:
       context: .
       args:
-        PHP_VERSION: "8.0"
+        BUILD_PHP_VERSION: "8.0"
     ports:
       - 22
       - 80
