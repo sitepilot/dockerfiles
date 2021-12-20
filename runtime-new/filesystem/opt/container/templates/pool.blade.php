@@ -410,7 +410,7 @@ pm.process_idle_timeout = {{ $php_fpm_process_idle_timeout }};
 ; Setting to "no" will make all environment variables available to PHP code
 ; via getenv(), $_ENV and $_SERVER.
 ; Default Value: yes
-clear_env = no
+clear_env = {{ $php_fpm_clear_env ? 'yes' : 'no' }}
 
 ; Limits the extensions of the main script FPM will allow to parse. This can
 ; prevent configuration mistakes on the web server side. You should only limit
@@ -423,11 +423,15 @@ clear_env = no
 ; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
 ; the current environment.
 ; Default Value: clean env
-;env[HOSTNAME] = $HOSTNAME
-;env[PATH] = /usr/local/bin:/usr/bin:/bin
-;env[TMP] = /tmp
-;env[TMPDIR] = /tmp
-;env[TEMP] = /tmp
+
+; Runtime specific
+env[RUNTIME_LOGS_PATH] = $RUNTIME_LOGS_PATH
+env[RUNTIME_CACHE_PATH] = $RUNTIME_CACHE_PATH
+env[RUNTIME_PUBLIC_PATH] = $RUNTIME_PUBLIC_PATH
+env[RUNTIME_CACHE_ENABLED] = $NGINX_CACHE
+
+; Platform specific
+env[PLATFORM] = Sitepilot
 
 ; Additional php.ini defines, specific to this pool of workers. These settings
 ; overwrite the values previously defined in the php.ini. The directives are the

@@ -22,6 +22,7 @@ variables:
   php_fpm_pm: "ondemand"
   php_fpm_max_children: 5
   php_fpm_process_idle_timeout: 30s
+  php_fpm_clear_env: true
   php_timezone: "Europe/Amsterdam"
   php_upload_size: "32M"
   php_memory_limit: "256M"
@@ -49,6 +50,7 @@ rules:
   php_max_input_vars: ["required", "numeric"]
   php_opcache_memory: ["required", "numeric"]
   php_disable_functions: ["nullable", "string"]
+  php_fpm_clear_env: ["boolean"]
   smtp_host: ["required", "string"]
   smtp_port: ["required", "numeric"]
   smtp_tls: ["boolean"]
