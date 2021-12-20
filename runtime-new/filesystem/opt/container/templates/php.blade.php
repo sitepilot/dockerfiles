@@ -14,3 +14,5 @@ opcache.memory_consumption = {{ $php_opcache_memory }}
 opcache.revalidate_freq = 2
 opcache.save_comments = 0
 sendmail_path = /usr/bin/msmtp -t
+error_log = {{ env('RUNTIME_LOGS_PATH') }}/php-error.log
+mail.log = {{ env('RUNTIME_LOGS_PATH') }}/php-mail.log

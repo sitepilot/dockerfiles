@@ -100,7 +100,7 @@ listen.group = {{ env('RUNTIME_USER_NAME') }}
 ;             pm.process_idle_timeout   - The number of seconds after which
 ;                                         an idle process will be killed.
 ; Note: This value is mandatory.
-pm = dynamic
+pm = {{ $php_fpm_pm }}
 
 ; The number of child processes to be created when pm is set to 'static' and the
 ; maximum number of child processes when pm is set to 'dynamic' or 'ondemand'.
@@ -111,7 +111,7 @@ pm = dynamic
 ; forget to tweak pm.* to fit your needs.
 ; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
 ; Note: This value is mandatory.
-pm.max_children = {{ $php_workers }}
+pm.max_children = {{ $php_fpm_max_children }}
 
 ; The number of child processes created on startup.
 ; Note: Used only when pm is set to 'dynamic'
@@ -131,7 +131,7 @@ pm.max_spare_servers = 3
 ; The number of seconds after which an idle process will be killed.
 ; Note: Used only when pm is set to 'ondemand'
 ; Default Value: 10s
-;pm.process_idle_timeout = 10s;
+pm.process_idle_timeout = {{ $php_fpm_process_idle_timeout }};
 
 ; The number of requests each child process should execute before respawning.
 ; This can be useful to work around memory leaks in 3rd party libraries. For

@@ -18,8 +18,10 @@ variables:
   nginx_doc_root: null
   nginx_ssl_key: /opt/container/config/ssl.key
   nginx_ssl_cert: /opt/container/config/ssl.cert
-  nginx_real_ip_from: '0.0.0.0/0' # comma separated list
-  php_workers: 5
+  nginx_real_ip_from: "0.0.0.0/0" # comma separated list
+  php_fpm_pm: "ondemand"
+  php_fpm_max_children: 5
+  php_fpm_process_idle_timeout: 30s
   php_timezone: "Europe/Amsterdam"
   php_upload_size: "32M"
   php_memory_limit: "256M"
@@ -32,13 +34,15 @@ variables:
   smtp_username: null
   smtp_password: null
   smtp_from: "website@runtime.local"
-  
+
 rules:
   nginx_cache: ["boolean"]
   nginx_doc_root: ["nullable", "string"]
   nginx_ssl_key: ["required", "string"]
   nginx_ssl_cert: ["required", "string"]
-  php_workers: ["required", "numeric"]
+  php_fpm_pm: ["required", "in:ondemand,dynamic"]
+  php_fpm_max_children: ["required", "numeric"]
+  php_fpm_process_idle_timeout: ["required", "ends_with:s,m"]
   php_timezone: ["required", "timezone"]
   php_upload_size: ["required", "ends_with:M,G"]
   php_memory_limit: ["required", "ends_with:M,G"]
