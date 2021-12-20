@@ -11,4 +11,7 @@ To override or extend the default service configuration mount a config file to:
 
 # Supervisor
 /opt/container/custom/supervisor.conf
+
+# Authorized Keys
+/opt/container/custom/authorized_keys
 ```

@@ -32,12 +32,13 @@ chown ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
   ${RUNTIME_PUBLIC_PATH}
 
 chown -R ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
-  /opt/container/www \
   ${RUNTIME_LOGS_PATH} \
   ${RUNTIME_CACHE_PATH} \
   ${RUNTIME_USER_HOME}/.ssh
 
-chmod 755 ${RUNTIME_USER_HOME}
+chown -R root:root /opt
+find /opt -type f -exec chmod 644 {} +
+find /opt -type d -exec chmod 755 {} +
 
 if [ -n "$RUNTIME_USER_PASSWORD" ]; then
   SSH_HOST_ECDSA_KEY=${RUNTIME_USER_HOME}/.ssh/ssh_host_ecdsa_key
