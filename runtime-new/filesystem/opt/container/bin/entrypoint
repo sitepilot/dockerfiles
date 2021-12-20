@@ -37,6 +37,8 @@ chown -R ${RUNTIME_USER_NAME}:${RUNTIME_USER_NAME} \
   ${RUNTIME_CACHE_PATH} \
   ${RUNTIME_USER_HOME}/.ssh
 
+chmod 755 ${RUNTIME_USER_HOME}
+
 if [ -n "$RUNTIME_USER_PASSWORD" ]; then
   SSH_HOST_ECDSA_KEY=${RUNTIME_USER_HOME}/.ssh/ssh_host_ecdsa_key
   SSH_HOST_RSA_KEY=${RUNTIME_USER_HOME}/.ssh/ssh_host_rsa_key
