@@ -18,6 +18,7 @@ include /opt/runtime/config/nginx/server/fastcgi-cache.conf;
 location /sitepilot {
 	alias /opt/runtime/www/;
 	index index.php;
+	access_log off;
 	location ~ \.php$ {     
     	fastcgi_pass $upstream;
 		include /opt/runtime/config/nginx/fastcgi-params.conf;
