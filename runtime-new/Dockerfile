@@ -55,6 +55,7 @@ RUN add-apt-repository ppa:ondrej/php -y \
     php${BUILD_PHP_VERSION}-redis \
     php${BUILD_PHP_VERSION}-soap \
     php${BUILD_PHP_VERSION}-zip \
+    php${BUILD_PHP_VERSION}-intl \
     && mkdir -p /run/php
 
 # Install Container CLI
