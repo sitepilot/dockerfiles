@@ -38,6 +38,7 @@ startretries=0
 @foreach($supervisor_programs as $program)
 [program:{{ $program['name'] }}]
 directory={{ env('RUNTIME_PUBLIC_PATH') }}
+user={{ env('RUNTIME_USER_NAME') }}
 command={{ $program['command'] }}
 stdout_logfile=/dev/stdout
 stdout_logfile_maxbytes=0
