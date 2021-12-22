@@ -40,6 +40,7 @@ startretries=0
 directory={{ env('RUNTIME_PUBLIC_PATH') }}
 user={{ env('RUNTIME_USER_NAME') }}
 command={{ $program['command'] }}
+environment=HOME="{{ env('RUNTIME_USER_HOME') }}",USER="{{ env('RUNTIME_USER_NAME') }}"
 stdout_logfile=/dev/stdout
 stdout_logfile_maxbytes=0
 stderr_logfile=/dev/stderr
