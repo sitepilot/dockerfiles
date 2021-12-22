@@ -9,18 +9,18 @@ access_log {{ env('RUNTIME_LOGS_PATH') }}/access.log;
 error_log {{ env('RUNTIME_LOGS_PATH') }}/error.log;
 
 # Default server block rules
-include /opt/container/config/nginx/server/defaults.conf;
+include /opt/runtime/config/nginx/server/defaults.conf;
 
 # Fastcgi cache rules
-include /opt/container/config/nginx/server/fastcgi-cache.conf;
+include /opt/runtime/config/nginx/server/fastcgi-cache.conf;
 
 # Endpoint for health checks
 location /sitepilot {
-	alias /opt/container/www/;
+	alias /opt/runtime/www/;
 	index index.php;
 	location ~ \.php$ {     
     	fastcgi_pass $upstream;
-		include /opt/container/config/nginx/fastcgi-params.conf;
+		include /opt/runtime/config/nginx/fastcgi-params.conf;
         fastcgi_param SCRIPT_FILENAME  $request_filename;
     }
 }
@@ -31,14 +31,14 @@ location / {
 
 location ~ \.php$ {
 	try_files $uri =404;
-	include /opt/container/config/nginx/fastcgi-params.conf;
+	include /opt/runtime/config/nginx/fastcgi-params.conf;
 
 	# Use the php pool defined in the upstream variable.
-	# See /opt/container/config/nginx/php-pool.conf for definition.
+	# See /opt/runtime/config/nginx/php-pool.conf for definition.
 	fastcgi_pass $upstream;
 
 	@if($nginx_cache)
-	# Skip cache based on rules in /opt/container/config/nginx/server/fastcgi-cache.conf.
+	# Skip cache based on rules in /opt/runtime/config/nginx/server/fastcgi-cache.conf.
 	fastcgi_cache_bypass $skip_cache;
 	fastcgi_no_cache $skip_cache;
 

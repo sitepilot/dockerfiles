@@ -39,7 +39,7 @@ PermitRootLogin no
 PubkeyAuthentication yes
 
 # Expect .ssh/authorized_keys2 to be disregarded by default in future.
-AuthorizedKeysFile /opt/container/config/authorized_keys
+AuthorizedKeysFile /opt/runtime/config/authorized_keys
 
 #AuthorizedPrincipalsFile none
 

@@ -1,27 +1,27 @@
 ---
 templates:
   - name: supervisord
-    destination: /opt/container/config/supervisord.conf
+    destination: /opt/runtime/config/supervisord.conf
   - name: vhost
-    destination: /opt/container/config/vhost.conf
+    destination: /opt/runtime/config/vhost.conf
   - name: nginx
-    destination: /opt/container/config/nginx.conf
+    destination: /opt/runtime/config/nginx.conf
   - name: pool
-    destination: /opt/container/config/pool.conf
+    destination: /opt/runtime/config/pool.conf
   - name: php
-    destination: /opt/container/config/php.ini
+    destination: /opt/runtime/config/php.ini
   - name: msmtp
-    destination: /opt/container/config/msmtp.conf
+    destination: /opt/runtime/config/msmtp.conf
   - name: sshd
-    destination: /opt/container/config/sshd_config
+    destination: /opt/runtime/config/sshd_config
   - name: authorized-keys
-    destination: /opt/container/config/authorized_keys
+    destination: /opt/runtime/config/authorized_keys
 
 variables:
   nginx_cache: false
   nginx_doc_root: null
-  nginx_ssl_key: /opt/container/config/ssl.key
-  nginx_ssl_cert: /opt/container/config/ssl.cert
+  nginx_ssl_key: /opt/runtime/config/ssl.key
+  nginx_ssl_cert: /opt/runtime/config/ssl.cert
   nginx_real_ip_from: "0.0.0.0/0" # comma separated list
   php_fpm_pm: "ondemand"
   php_fpm_max_children: 5
@@ -41,6 +41,10 @@ variables:
   smtp_password: null
   smtp_from: "website@runtime.local"
   authorized_keys: []
+  #  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICdlWNHpHVxtHI6Ao++5O/5qCUxaAkkCXdOcPuwlohks user@autopilot.test
+  supervisor_programs: []
+  #  - name: "horizon"
+  #    command: "php ./artisan horizon"
 
 rules:
   nginx_cache: ["boolean"]
@@ -67,3 +71,6 @@ rules:
   smtp_password: ["nullable", "string"]
   smtp_from: ["required", "email"]
   authorized_keys: ["array"]
+  supervisor_programs: ["array"]
+  supervisor_programs.*.name: ["required", "string"]
+  supervisor_programs.*.command: ["required", "string"]

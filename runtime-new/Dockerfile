@@ -58,7 +58,7 @@ RUN add-apt-repository ppa:ondrej/php -y \
     && mkdir -p /run/php
 
 # Install Container CLI
-RUN curl -OL https://github.com/sitepilot/container-cli/releases/download/v1.0.2/container \
+RUN curl -OL https://github.com/sitepilot/container-cli/releases/download/v1.0.6/container \
     && chmod +x container \
     && mv container /usr/local/bin/container \
     && container --version
@@ -88,16 +88,16 @@ RUN usermod -l runtime -u ${RUNTIME_USER_ID} -d ${RUNTIME_USER_HOME} www-data \
 # Config
 COPY filesystem /
 
-RUN ln -sf /opt/container/config/msmtp.conf /etc/msmtprc \
-    && ln -sf /opt/container/config/nginx.conf /etc/nginx/nginx.conf \
-    && ln -sf /opt/container/config/pool.conf /etc/php/${BUILD_PHP_VERSION}/fpm/pool.d/www.conf  \
-    && ln -sf /opt/container/config/php.ini /etc/php/${BUILD_PHP_VERSION}/fpm/conf.d/90-runtime.ini \
-    && ln -sf /opt/container/config/sshd_config /etc/ssh/sshd_config
+RUN ln -sf /opt/runtime/config/msmtp.conf /etc/msmtprc \
+    && ln -sf /opt/runtime/config/nginx.conf /etc/nginx/nginx.conf \
+    && ln -sf /opt/runtime/config/pool.conf /etc/php/${BUILD_PHP_VERSION}/fpm/pool.d/www.conf  \
+    && ln -sf /opt/runtime/config/php.ini /etc/php/${BUILD_PHP_VERSION}/fpm/conf.d/90-runtime.ini \
+    && ln -sf /opt/runtime/config/sshd_config /etc/ssh/sshd_config
 
 RUN mkdir -p /run/nginx /run/php /run/sshd
 
 WORKDIR ${RUNTIME_PUBLIC_PATH}
 
-ENTRYPOINT ["/opt/container/bin/entrypoint"]
+ENTRYPOINT ["/opt/runtime/bin/entrypoint"]
 
-CMD ["/usr/bin/supervisord", "-c", "/opt/container/config/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/opt/runtime/config/supervisord.conf"]

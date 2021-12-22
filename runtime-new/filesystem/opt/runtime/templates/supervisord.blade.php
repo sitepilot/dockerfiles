@@ -35,9 +35,21 @@ autorestart=false
 startretries=0
 @endif
 
-@if(file_exists("/opt/container/custom/supervisor.conf"))
+@foreach($supervisor_programs as $program)
+[program:{{ $program['name'] }}]
+directory={{ env('RUNTIME_PUBLIC_PATH') }}
+command={{ $program['command'] }}
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+autorestart=false
+startretries=0
+@endforeach
+
+@if(file_exists("/opt/runtime/custom/supervisor.conf"))
 [include]
-files = /opt/container/custom/supervisor.conf
+files = /opt/runtime/custom/supervisor.conf
 @endif
 
 [eventlistener:processes]

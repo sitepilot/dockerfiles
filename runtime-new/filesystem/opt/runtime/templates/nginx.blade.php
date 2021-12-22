@@ -23,14 +23,14 @@ events {
 
 http {
 	# HTTP
-	include /opt/container/config/nginx/http.conf;
+	include /opt/runtime/config/nginx/http.conf;
 
 	# MIME Types
-	include /opt/container/config/nginx/mime-types.conf;
+	include /opt/runtime/config/nginx/mime-types.conf;
 	default_type application/octet-stream;
 
 	# Limits & Timeouts
-	include /opt/container/config/nginx/limits.conf;
+	include /opt/runtime/config/nginx/limits.conf;
 
 	# Set the maximum allowed size of client request body. This should be set
 	# to the value of files sizes you wish to upload to the WordPress Media Library.
@@ -48,10 +48,10 @@ http {
 	access_log /var/log/nginx/access.log;
 
 	# Gzip
-	include /opt/container/config/nginx/gzip.conf;
+	include /opt/runtime/config/nginx/gzip.conf;
 
 	# exposes configured php pool on $upstream variable
-	include /opt/container/config/nginx/php-pool.conf;
+	include /opt/runtime/config/nginx/php-pool.conf;
 
     # Define path to cache and memory zone. The memory zone should be unique.
     # keys_zone=single-site-with-caching.com:100m creates the memory zone and sets the maximum size in MBs.
@@ -78,7 +78,7 @@ http {
         listen [::]:80 default_server;
 
         # Vhost
-	    include /opt/container/config/vhost.conf;
+	    include /opt/runtime/config/vhost.conf;
     }
 
     # HTTPS
@@ -92,9 +92,9 @@ http {
         ssl_certificate_key {{ $nginx_ssl_key }};
 
         # SSL rules
-        # include /opt/container/config/nginx/server/ssl.conf;
+        # include /opt/runtime/config/nginx/server/ssl.conf;
 
         # Vhost
-	    include /opt/container/config/vhost.conf;
+	    include /opt/runtime/config/vhost.conf;
     }
 }

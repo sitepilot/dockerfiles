@@ -16,7 +16,7 @@ services:
       RUNTIME_USER_PASSWORD: "$$2y$$10$$MJwRvRbh70kJNrRWp2FzLeF4CJNG4a1tqyggtSeDvcmd4nfNXV5K." # secret
     volumes:
       - ./public:/home/runtime/public
-      - ./custom.yml:/opt/container/custom.yml
+      - ./config.yml:/opt/runtime/config.yml
 
   runtime-80:
     image: ghcr.io/sitepilot/runtime:8.0
@@ -34,4 +34,4 @@ services:
       RUNTIME_USER_PASSWORD: "$$2y$$10$$MJwRvRbh70kJNrRWp2FzLeF4CJNG4a1tqyggtSeDvcmd4nfNXV5K." # secret
     volumes:
       - ./public:/home/runtime/public
-      - ./custom.yml:/opt/container/custom.yml
+      - ./config.yml:/opt/runtime/config.yml
