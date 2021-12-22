@@ -424,13 +424,6 @@ clear_env = {{ $php_fpm_clear_env ? 'yes' : 'no' }}
 ; the current environment.
 ; Default Value: clean env
 
-; Platform specific
-env[PLATFORM] = Sitepilot
-env[SITEPILOT_CACHE] = "{{ $nginx_cache ? 'On' : 'Off' }}"
-env[SITEPILOT_CACHE_PATH] = $RUNTIME_CACHE_PATH
-env[SITEPILOT_LOGS_PATH] = $RUNTIME_LOGS_PATH
-
-; Custom
 @foreach($php_fpm_env as $env) 
 env[{{ $env['name'] }}] = {{ $env['value'] }}
 @endforeach
