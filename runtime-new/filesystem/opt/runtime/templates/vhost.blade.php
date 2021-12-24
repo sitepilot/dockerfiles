@@ -26,6 +26,12 @@ location /sitepilot {
     }
 }
 
+# Endpoint for livereloads
+location /sitepilot/livereload {
+	access_log off;
+	proxy_pass http://localhost:35729/;
+}
+
 location / {
 	try_files $uri $uri/ /index.php?$args;
 }
