@@ -14,6 +14,10 @@ include /opt/runtime/config/nginx/server/defaults.conf;
 # Fastcgi cache rules
 include /opt/runtime/config/nginx/server/fastcgi-cache.conf;
 
+# Rewrites for Yoast SEO XML Sitemap
+rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+
 # Endpoint for health checks
 location /sitepilot {
 	alias /opt/runtime/www/;
